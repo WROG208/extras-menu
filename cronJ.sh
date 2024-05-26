@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# 5/26/2024 By WROG208 \ N4ASS
+# www.lonewolfsystem.org
 
 prompt_for_input() {
   read -p "Enter minute (0-59): " minute
