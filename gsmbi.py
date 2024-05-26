@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# 5/26/2024 By WROG208 \ N4ASS
+# www.lonewolfsystem.org
+
 from gtts import gTTS
 import os
 import subprocess
