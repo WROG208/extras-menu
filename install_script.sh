@@ -3,10 +3,8 @@
 # 5/26/2024 By WROG208 \ N4ASS
 # www.lonewolfsystem.org
 
-
 SCRIPTS=("menu.sh" "gsmbi.py" "cronJ.sh")
 DESTINATION="/usr/local/sbin"
-
 
 REPO_DIR=$(basename $(pwd))
 
@@ -21,6 +19,40 @@ move_and_make_executable() {
 
   sudo chmod +x "$DESTINATION/$script"
 }
+
+install_pip() {
+  if ! command -v pip &> /dev/null; then
+    echo "pip is not installed. Installing pip..."
+    wget https://bootstrap.pypa.io/pip/3.5/get-pip.py -O get-pip.py
+    sudo python3 get-pip.py
+    rm get-pip.py
+    if ! command -v pip &> /dev/null; then
+      echo "Error: Failed to install pip. Please install it manually."
+      exit 1
+    fi
+  else
+    echo "pip is already installed."
+  fi
+}
+
+install_gtts() {
+  if ! python3 -c "import gtts" &> /dev/null; then
+    echo "gTTS is not installed. Installing now..."
+    sudo pip install gtts
+    if [ $? -ne 0 ]; then
+      echo "Error: Failed to install gTTS. Please install it manually."
+      exit 1
+    fi
+  else
+    echo "gTTS is already installed."
+  fi
+}
+
+
+install_pip
+
+
+install_gtts
 
 
 for script in "${SCRIPTS[@]}"; do
