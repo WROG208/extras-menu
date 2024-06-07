@@ -49,11 +49,11 @@ command = [
 
 try:
     subprocess.run(command, check=True)
-    # If conversion is successful, delete the temporary WAV file
+
     os.remove(temp_wav_filename)
     print("The speech has been saved as {} and the temporary WAV file has been deleted.".format(output_filename_ul))
 except subprocess.CalledProcessError as e:
     print("An error occurred during the conversion process: {}".format(e))
-    # Clean up the temporary WAV file in case of an error
+
     if os.path.exists(temp_wav_filename):
         os.remove(temp_wav_filename)
