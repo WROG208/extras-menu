@@ -51,8 +51,21 @@ install_gtts() {
 install_ffmpeg() {
   if ! command -v ffmpeg &> /dev/null; then
     echo "ffmpeg is not installed. Installing ffmpeg..."
-    sudo apt-get update
-    sudo apt-get install -y ffmpeg
+    if command -v apt-get &> /dev/null; then
+      sudo apt-get update
+      sudo apt-get install -y ffmpeg
+    elif command -v yum &> /dev/null; then
+      sudo yum install -y epel-release
+      sudo yum install -y ffmpeg ffmpeg-devel
+    elif command -v dnf &> /dev/null; then
+      sudo dnf install -y ffmpeg
+    elif command -v pacman &> /dev/null; then
+      sudo pacman -Sy ffmpeg
+    else
+      echo "Error: No suitable package manager found. Please install ffmpeg manually."
+      exit 1
+    fi
+
     if ! command -v ffmpeg &> /dev/null; then
       echo "Error: Failed to install ffmpeg. Please install it manually."
       exit 1
