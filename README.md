@@ -12,6 +12,7 @@
 
 ## Scripts included
 - menu.sh----This is the menu like when you first sign into the Pi.
+- global.sh----Changes information on the global.inc to change the text on the top part of the supermon page.
 - cronJ.sh----To make CRON jobs easier instead of using crontab -e Please be careful with this if you don't know how to use it leave it ALONE.
 - gsmbi.py----To convert Text into a sound file that Asterisk can use.
 - *astdb.php----To update the database. Helpful when your Supermon page only says NODE not in database
