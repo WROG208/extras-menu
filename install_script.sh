@@ -18,7 +18,7 @@ move_and_make_executable() {
   fi
 
   sudo mv "$script" "$DESTINATION"
-  # Make the script executable
+
   sudo chmod +x "$DESTINATION/$script"
 }
 
