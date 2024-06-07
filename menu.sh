@@ -59,27 +59,27 @@ execute_choice() {
     case $choice in
         1)
             dialog --infobox "Running Script to make sound files..." 5 50
-            gsmbi.py
+            gsmbi.py || { dialog --msgbox "An error occurred while running gsmbi.py" 7 60; sleep 5; return 1; }
             ;;
         2)
             dialog --infobox "Running Script to make CRON jobs..." 5 50
-            cronJ.sh
+            cronJ.sh || { dialog --msgbox "An error occurred while running cronJ.sh" 7 60; sleep 5; return 1; }
             ;;
         3)
             dialog --infobox "Running Script to update the database..." 5 50
-            astdb.php
+            astdb.php || { dialog --msgbox "An error occurred while running astdb.php" 7 60; sleep 5; return 1; }
             ;;
         4)
             dialog --infobox "Running Script Current CPU stats..." 5 50
-            cpu_stats.sh
+            cpu_stats.sh || { dialog --msgbox "An error occurred while running cpu_stats.sh" 7 60; sleep 5; return 1; }
             ;;
         5)
             dialog --infobox "Running Script to Reboot the Pi..." 5 50
-            reboot.sh
+            reboot.sh || { dialog --msgbox "An error occurred while running reboot.sh" 7 60; sleep 5; return 1; }
             ;;
         6)
             dialog --infobox "Running Script First Time..." 5 50
-            firsttime.sh
+            firsttime.sh || { dialog --msgbox "An error occurred while running firsttime.sh" 7 60; sleep 5; return 1; }
             ;;
         7)
             dialog --infobox "Goodbye..." 5 40
