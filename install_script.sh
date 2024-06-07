@@ -48,17 +48,29 @@ install_gtts() {
   fi
 }
 
+install_ffmpeg() {
+  if ! command -v ffmpeg &> /dev/null; then
+    echo "ffmpeg is not installed. Installing ffmpeg..."
+    sudo apt-get update
+    sudo apt-get install -y ffmpeg
+    if ! command -v ffmpeg &> /dev/null; then
+      echo "Error: Failed to install ffmpeg. Please install it manually."
+      exit 1
+    fi
+  else
+    echo "ffmpeg is already installed."
+  fi
+}
 
 install_pip
 
-
 install_gtts
 
+install_ffmpeg
 
 for script in "${SCRIPTS[@]}"; do
   move_and_make_executable "$script"
 done
-
 
 for script in "${SCRIPTS[@]}"; do
   if [ -f "$DESTINATION/$script" ] && [ -x "$DESTINATION/$script" ]; then
