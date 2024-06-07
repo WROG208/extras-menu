@@ -1,4 +1,7 @@
 # Extras-menu
+## **** 6/7/2024 UPDATE.....
+## I completely spaced out and forgot to add the links for the dependencies needed by this. FFMPEG  PIP  and PYTHON (Already installed in the system) Now the first time you run the install it will check for those dependencies and if they are not there it will download and install. I am working on some more scripts that will add some things to the supermon page and i have some other ideas the thing is getting them to all work together.
+
 ## A collection of different scripts to use in GMRSlive.
 ### Might also work on Allstar but I did not test it so use it at your own risk.
 ### I am not liable for whatever happens to your NODE. 
