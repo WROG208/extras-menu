@@ -22,7 +22,7 @@ echo "The cron job you entered is: $cron_job"
 read -p "Do you want to add this cron job? (y/n): " confirm
 
 if [ "$confirm" = "y" ]; then
-  # Check if the cron job already exists and add it if it doesn't
+
   (crontab -l | grep -Fxq "$cron_job") || (crontab -l; echo "$cron_job") | crontab -
   echo "Cron job added successfully."
 else
