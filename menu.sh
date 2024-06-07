@@ -14,7 +14,8 @@ show_menu() {
        4 "Script to Current CPU stats" \
        5 "Script to Reboot the Pi" \
        6 "Script to Run the First Time script" \
-       7 "Exit" \
+       7 "Script to change information in Global.inc" \
+       8 "Exit" \
        3>&1 1>&2 2>&3
 }
 
@@ -45,6 +46,9 @@ display_info() {
             dialog --msgbox "This script will run the First Time script that was used to set up the node the first time." 7 60
             ;;
         7)
+            dialog --msgbox "This script can change the information on Global.inc. The top portion of your Supermon page" 7 60 
+            ;;
+        8)
             dialog --msgbox "Goodbye..." 5 40
             exit 0  
             ;;
@@ -82,6 +86,11 @@ execute_choice() {
             firsttime.sh || { dialog --msgbox "An error occurred while running firsttime.sh" 7 60; sleep 5; return 1; }
             ;;
         7)
+            dialog --infobox "Running Script To Change the information on global.inc" 5 50
+            global.sh || { dialog --msgbox "An error occurred while running global.sh" 7 60; sleep 5; return 1; }
+ 
+            ;;
+        8)
             dialog --infobox "Goodbye..." 5 40
             exit 0 
             ;;
