@@ -1,30 +1,27 @@
 #!/bin/bash
 
-# 5/26/2024 By WROG208 \ N4ASS
+# 5/26/2024 WROG208 \ N4ASS
 # www.lonewolfsystem.org
 
 show_menu() {
     dialog --clear --backtitle "" \
-	   --title "Made By WROG208 / N4ASS"\
-           --menu "Extras Menu Choose an option:" \
-           20 60 10 \
-           1 "Script to make sound files from Text" \
-           2 "Script to make CRON jobs" \
-           3 "Script to update Database" \
-           4 "Script to Current CPU stats" \
-           5 "Script to Reboot the Pi" \
-           6 "Script to Run the First Time script" \
-           7 "Exit" \
-           3>&1 1>&2 2>&3
+       --title "WROG208 / N4ASS"\
+       --menu "Extras Menu Choose an option:" \
+       20 60 10 \
+       1 "Script to make sound files from Text" \
+       2 "Script to make CRON jobs" \
+       3 "Script to update Database" \
+       4 "Script to Current CPU stats" \
+       5 "Script to Reboot the Pi" \
+       6 "Script to Run the First Time script" \
+       7 "Exit" \
+       3>&1 1>&2 2>&3
 }
-
 
 confirm_choice() {
-    local choice=$2
-    dialog --clear --title "Confirmation" --yesno "Are you sure about what you are doing? $choice?" 7 60
+    dialog --clear --title "Confirmation" --yesno "Are you sure about what you are doing?" 7 60
     return $?
 }
-
 
 display_info() {
     local choice=$1
@@ -49,14 +46,13 @@ display_info() {
             ;;
         7)
             dialog --msgbox "Goodbye..." 5 40
-            exit 0  # Exits the script
+            exit 0  
             ;;
         *)
             dialog --msgbox "Invalid choice, please select a valid option." 7 60
             ;;
     esac
 }
-
 
 execute_choice() {
     local choice=$1
@@ -87,7 +83,7 @@ execute_choice() {
             ;;
         7)
             dialog --infobox "Goodbye..." 5 40
-            exit 0  # Exits the script
+            exit 0 
             ;;
         *)
             dialog --msgbox "Invalid choice, please select a valid option." 7 60
@@ -95,15 +91,18 @@ execute_choice() {
     esac
 }
 
-
 while true; do
     CHOICE=$(show_menu)
     if [[ -n $CHOICE ]]; then
         display_info $CHOICE
-        if confirm_choice $CHOICE; then
-            execute_choice $CHOICE
+        if [[ $CHOICE -eq 2 ]]; then
+            if confirm_choice; then
+                execute_choice $CHOICE
+            else
+                dialog --msgbox "Returning to menu..." 5 40
+            fi
         else
-            dialog --msgbox "Returning to menu..." 5 40
+            execute_choice $CHOICE
         fi
     else
         clear
