@@ -20,7 +20,7 @@ show_menu() {
 
 
 confirm_choice() {
-    local choice=$1
+    local choice=$2
     dialog --clear --title "Confirmation" --yesno "Are you sure about what you are doing? $choice?" 7 60
     return $?
 }
