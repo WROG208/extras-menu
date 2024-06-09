@@ -8,14 +8,15 @@ show_menu() {
        --title "WROG208 / N4ASS"\
        --menu "Extras Menu Choose an option:" \
        20 60 10 \
-       1 "Script to make sound files from Text" \
-       2 "Script to make CRON jobs" \
-       3 "Script to update Database" \
+       1 "Script to Make sound files from Text" \
+       2 "Script to Make CRON jobs" \
+       3 "Script to Update The Database" \
        4 "Script to Current CPU stats" \
        5 "Script to Reboot the Pi" \
        6 "Script to Run the First Time script" \
-       7 "Script to change information in Global.inc" \
-       8 "Exit" \
+       7 "Script to Change information in Global.inc" \
+       8 "Script to Setup Supermon" \
+       9 "Exit" \
        3>&1 1>&2 2>&3
 }
 
@@ -49,6 +50,9 @@ display_info() {
             dialog --msgbox "This script can change the information on Global.inc. The top portion of your Supermon page" 7 60 
             ;;
         8)
+            dialog --msgbox "This script will setup your supermon page" 7 60 
+            ;;
+        9)
             dialog --msgbox "Goodbye..." 5 40
             exit 0  
             ;;
@@ -88,9 +92,12 @@ execute_choice() {
         7)
             dialog --infobox "Running Script To Change the information on global.inc" 5 50
             global.sh || { dialog --msgbox "An error occurred while running global.sh" 7 60; sleep 5; return 1; }
- 
             ;;
         8)
+            dialog --infobox "Running Script To Set up your Supermon Page" 5 50
+            supermon.setup.sh || { dialog --msgbox "An error occurred while running supermon.setup.sh" 7 60; sleep 5; return 1; } 
+            ;;
+        9)
             dialog --infobox "Goodbye..." 5 40
             exit 0 
             ;;
