@@ -1,12 +1,16 @@
-# Extras-menu
-## **** 6/7/2024 UPDATE.....
-## I completely spaced out and forgot to add the links for the dependencies needed by this. FFMPEG  PIP  and PYTHON (Already installed in the system) Now the first time you run the install it will check for those dependencies and if they are not there it will download and install. I am working on some more scripts that will add some things to the supermon page and i have some other ideas the thing is getting them to all work together.
+# Extras-menu A collection of different scripts to use in GMRSlive NODE.
 
-## A collection of different scripts to use in GMRSlive.
-### Might also work on Allstar but I did not test it so use it at your own risk.
-### I am not liable for whatever happens to your NODE. 
-### I tested on a Raspberry Pi 3B+ Running GMRSLive v2.1.3 image and except for gTTS (Google Text To Speech) nothing else needs to be installed. All that is needed it's already on the Pi.
+# **** 6/7/2024 UPDATE..... I completely spaced out and forgot to add the links for the dependencies needed by this. FFMPEG  PIP  and gTTS. The first time you run the install script it will check for those dependencies and if they are not in the system it will download and install them.
 
+# I am not liable for whatever happens to your NODE. It will not work on Allstar installations. You can try but don't blame me if you break your system.  Tested on a Raspberry Pi 3B+ Running GMRSLive v2.1.3 image.
+ 
+ 
+# When you run the install script it will look for PIP, FFMPEG, and gTTS if they are not on your system and most likely they are not, they will be downloaded and installed on your system.
+# What are these things and why do you need them?
+- PIP is a package manager for Python packages, or modules if you like.
+- FFMPEG is the leading multimedia framework, able to decode, encode, transcode, mux, demux, stream, filter, and play pretty much anything that humans and machines have created.
+- gTTS (Google Text-to-Speech) library is a powerful tool for converting text to speech in Python, allowing you to create audio files from any text.
+# Why do you need them? You need PIP because you need to install FFMPEG and the regular package manager on the Pi right now (Pacman) can't download it. FFMPEG like the explanation says has all the encoders and decoders for your system to play and in this case encode sound files. And finally, gTTS is needed well because it's what will convert your text into a sound file with the help of FFMPEG. 
 
 ### Some of these scripts already have a version of them in the GMRSlive image, they are not that easy to use and all are command line. For a newbie who doesn't know his way around the BASH Shell or command prompt, I hope I made it a bit easier.
 
