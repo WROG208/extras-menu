@@ -19,6 +19,7 @@
 - global.sh----Changes information on the global.inc to change the text on the top part of the supermon page.
 - cronJ.sh----To make CRON jobs easier instead of using crontab -e Please be careful with this if you don't know how to use it leave it ALONE.
 - gsmbi.py----To convert Text into a sound file that Asterisk can use.
+- supermon.setup.sh----To set up the supermon page.
 - *astdb.php----To update the database. Helpful when your Supermon page only says NODE not in database
 - *cpu_stats.sh----Status of the CPU of the Pi.
 - *reboot.sh----Reboot the system
