@@ -11,7 +11,7 @@ ASTERISK_MANAGER_CONF="/etc/asterisk/manager.conf"
 STATUS_PAGES_FILE="/usr/local/sbin/status_pages.txt"
 DATETIME=$(date +"%Y%m%d_%H%M%S")
 
-# Backup function
+
 backup_file() {
   local file=$1
   local backup_file="${file}.${DATETIME}.bak"
@@ -23,7 +23,7 @@ backup_file() {
   fi
 }
 
-# Function to configure Supermon
+ 
 configure_supermon() {
   dialog --title "Supermon Setup" --msgbox "Configuring Supermon..." 7 40
   
@@ -39,7 +39,7 @@ configure_supermon() {
   NODE_NUMBER=$(dialog --inputbox "Enter Node Number:" 8 40 3>&1 1>&2 2>&3 3>&1)
   PORT=$(dialog --inputbox "Enter Asterisk Manager Port (default 5038):" 8 40 "5038" 3>&1 1>&2 2>&3 3>&1)
 
-  # Check for required inputs and password confirmation
+
   if [ -z "$CALL" ] || [ -z "$USERNAME" ] || [ -z "$PASSWORD" ] || [ -z "$PASSWORD_CONFIRM" ] || [ -z "$NODE_NUMBER" ] || [ -z "$PORT" ]; then
     dialog --msgbox "Error: All required fields must be filled in." 7 40
     exit 1
@@ -50,12 +50,12 @@ configure_supermon() {
     exit 1
   fi
 
-  # Backup configuration files
+
   backup_file "$CONFIG_FILE"
   backup_file "$ALLMON_CONFIG_FILE"
   backup_file "$ASTERISK_MANAGER_CONF"
 
-  # Update global.inc file
+
   sudo sed -i "s/\$CALL = \".*\";/\$CALL = \"$CALL\";/g" "$CONFIG_FILE"
   sudo sed -i "s/\$NAME = \".*\";/\$NAME = \"$NAME\";/g" "$CONFIG_FILE"
   sudo sed -i "s/\$LOCATION = \".*\";/\$LOCATION = \"$LOCATION\";/g" "$CONFIG_FILE"
@@ -63,10 +63,9 @@ configure_supermon() {
   sudo sed -i "s/\$TITLE3 = \".*\";/\$TITLE3 = \"$TITLE3\";/g" "$CONFIG_FILE"
   sudo sed -i "s/\$LOCALZIP = \".*\";/\$LOCALZIP = \"$LOCALZIP\";/g" "$CONFIG_FILE"
 
-  # Change to Supermon directory
   cd "$SUPERMON_DIR"
 
-  # Create the .htpasswd file for authentication
+
   echo -e "${PASSWORD}\n${PASSWORD}" | sudo htpasswd -cB .htpasswd "$USERNAME"
 
   if [ $? -ne 0 ]; then
@@ -74,7 +73,7 @@ configure_supermon() {
     exit 1
   fi
 
-  # Configure Apache to use .htpasswd for authentication
+
   sudo bash -c "cat > /etc/httpd/conf/extra/supermon.conf <<EOL
 Alias /supermon ${SUPERMON_DIR}
 <Directory ${SUPERMON_DIR}>
@@ -88,15 +87,15 @@ Alias /supermon ${SUPERMON_DIR}
 </Directory>
 EOL"
   
-  # Ensure httpd.conf includes the supermon.conf
+
   if ! grep -q "Include conf/extra/supermon.conf" /etc/httpd/conf/httpd.conf; then
     sudo bash -c "echo 'Include conf/extra/supermon.conf' >> /etc/httpd/conf/httpd.conf"
   fi
 
-  # Update the Asterisk manager.conf file with the new password
+
   sudo sed -i "s/^secret *= *.*/secret = $PASSWORD/" "$ASTERISK_MANAGER_CONF"
 
-  # Update the allmon.ini file with the node information
+
   sudo bash -c "cat > $ALLMON_CONFIG_FILE <<EOL
 [$NODE_NUMBER]
 host=127.0.0.1:$PORT
@@ -123,14 +122,14 @@ EOL"
     fi
   fi
 
-  # Restart Apache and Asterisk to apply changes
+
   sudo systemctl restart httpd
   sudo systemctl restart asterisk
 
   dialog --msgbox "Supermon configured." 7 40
 }
 
-# Function to add users to Supermon
+
 add_user_to_supermon() {
   dialog --title "Add User to Supermon" --msgbox "Adding user to Supermon..." 7 40
   
@@ -138,7 +137,7 @@ add_user_to_supermon() {
   PASSWORD=$(dialog --inputbox "Create NEW Password For Supermon:" 8 40 3>&1 1>&2 2>&3 3>&1)
   PASSWORD_CONFIRM=$(dialog --inputbox "Confirm NEW Password For Supermon:" 8 40 3>&1 1>&2 2>&3 3>&1)
 
-  # Check for empty inputs and password confirmation
+
   if [ -z "$USERNAME" ] || [ -z "$PASSWORD" ] || [ -z "$PASSWORD_CONFIRM" ]; then
     dialog --msgbox "Error: Username, Password, and Password Confirmation are required fields." 7 40
     exit 1
@@ -151,7 +150,7 @@ add_user_to_supermon() {
   
   cd "$SUPERMON_DIR"
   
-  # Add a new user to the existing .htpasswd file
+
   echo -e "${PASSWORD}\n${PASSWORD}" | sudo htpasswd -B .htpasswd "$USERNAME"
 
   if [ $? -ne 0 ]; then
@@ -162,7 +161,7 @@ add_user_to_supermon() {
   dialog --msgbox "User added to Supermon." 7 40
 }
 
-# Function to revert changes
+
 revert_changes() {
   if [ -f "${CONFIG_FILE}.${DATETIME}.bak" ]; then
     sudo mv "${CONFIG_FILE}.${DATETIME}.bak" "$CONFIG_FILE"
@@ -175,12 +174,12 @@ revert_changes() {
   fi
   dialog --msgbox "Changes reverted." 7 40
 
-  # Restart Apache and Asterisk to apply changes
+
   sudo systemctl restart httpd
   sudo systemctl restart asterisk
 }
 
-# Main menu
+
 show_menu() {
   CHOICE=$(dialog --clear --title "Supermon Setup Menu\nwww.lonewolfsystem.org" \
            --menu "Choose an option:" \
@@ -209,7 +208,7 @@ show_menu() {
   esac
 }
 
-# Main loop
+
 while true; do
   show_menu
 done
