@@ -3,7 +3,7 @@
 # 5/26/2024 By WROG208 \ N4ASS
 # www.lonewolfsystem.org
 
-SCRIPTS=("menu.sh" "gsmbi.py" "cronJ.sh" "global.sh")
+SCRIPTS=("menu.sh" "gsmbi.py" "cronJ.sh" "global.sh" "supermon.setup.sh")
 DESTINATION="/usr/local/sbin"
 
 REPO_DIR=$(basename $(pwd))
